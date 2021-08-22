@@ -12,7 +12,7 @@ import { ThemeState } from 'src/reducers/themeReducer';
 function Home() {
   const { Common, Fonts, Gutters, Layout } = useTheme()
 
-  const user = useSelector(state => state.users.user);
+  //const user = useSelector(state => state.users.user);
   const theme = useSelector(state => state.theme);
   const {t} = useTranslation();
   const dispatch = useDispatch();

@@ -13,7 +13,7 @@ import Splash from '../components/Slash';
 function Start() {
   const { Common, Fonts, Gutters, Layout } = useTheme()
 
-  const user = useSelector(state => state.users.user);
+  //const user = useSelector(state => state.users.user);
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const fetchUser = () => {
