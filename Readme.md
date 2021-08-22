@@ -1,13 +1,13 @@
 #AgileSoft react Native Test
 
-![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_1.png?raw=true)
-![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_2.png?raw=true)
-![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_3.png?raw=true)
-![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_4.png?raw=true)
-![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_5.png?raw=true)
-![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_6.png?raw=true)
-![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_7.png?raw=true)
-![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_8.png?raw=true)
+![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_1.png)
+![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_2.png)
+![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_3.png)
+![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_4.png)
+![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_5.png)
+![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_6.png)
+![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_7.png)
+![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_8.png)
 
 # AgileSoft ReactNative - Base
 
