@@ -18,6 +18,8 @@ import { Ionicons } from 'react-native-vector-icons';
 import Splash from './components/Slash';
 import Login from './containers/Login';
 import Toast from 'react-native-toast-message';
+import { IAgileSoftUser } from './utils/interfaces';
+import { useSelector } from 'react-redux';
 
 export type AppTabParamList = {
   Home: undefined;
@@ -45,6 +47,9 @@ const App = () => {
       RNBootSplash.hide(); // fade animation // {duration: 250}
     });
   }, []);
+
+  const user:IAgileSoftUser = useSelector<IAgileSoftUser>(state => state.app.user );
+
 
   const { t } = useTranslation();
 
@@ -95,7 +100,7 @@ return (
         }}>
         <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
         <Tab.Navigator
-          //initialRouteName="Home"
+          initialRouteName={user? "Home" : "Login" }
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
@@ -115,6 +120,7 @@ return (
             activeTintColor: 'tomato',
             inactiveTintColor: 'gray',
           }}>
+          { user &&
           <Tab.Screen
             name="Home"
             options={{
@@ -129,7 +135,7 @@ return (
               ),
             }}
             component={HomeStackScreen}
-          />
+          />}
           {/*
           <Tab.Screen
             name="Settings"

@@ -8,24 +8,17 @@ import changeThemeAction from '../actions/themeActions';
 import Colors from '../constants/colors';
 import useSelector from '../utils/useSelector';
 import { ThemeState } from 'src/reducers/themeReducer';
+import { IAgileSoftUser } from 'src/utils/interfaces';
 
 function Home() {
   const { Common, Fonts, Gutters, Layout } = useTheme()
 
-  //const user = useSelector(state => state.users.user);
   const theme = useSelector(state => state.theme);
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
-  /*const fetchUser = () => {
-    const userId = '1';
-    dispatch(fetchUserAsync.request(userId));
-  };*/
+  const user:IAgileSoftUser = useSelector<IAgileSoftUser>(state => state.app.user );
 
-  const instructions = Platform.select({
-    ios: t('iosInstruction'),
-    android: t('androidInstruction'),
-  });
 
   const changeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
     console.log(theme,darkMode);
