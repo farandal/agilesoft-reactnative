@@ -8,6 +8,18 @@ const PARSERS = {
   LOGIN_SUCCESS:  (json: any): IAgileSoftGetAuth => {
     let auth_response: IAgileSoftGetAuth = json.data;
     return auth_response;
+  },
+  GET_ME:  (json: any): any => {
+    return json.data;
+  },
+  GET_NOW_PLAYING: (json: any): any => {
+    return json.data;
+  },
+  GET_POPULAR :(json: any): any => {
+    return json.data;
+  },
+  GET_DETAIL : (json: any): any => {
+    return json.data;
   }
 };
 
