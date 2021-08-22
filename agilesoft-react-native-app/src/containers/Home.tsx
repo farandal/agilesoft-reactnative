@@ -1,20 +1,14 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ActivityIndicator, Button, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {ScrollView} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {useTheme} from '../Theme';
-import {fetchUserAsync} from '../actions/usersActions';
-//import changeThemeAction from '../actions/themeActions';
-import Colors from '../constants/colors';
 import useStateSelector from '../utils/useStateSelector';
-import { ThemeState } from 'src/reducers/themeReducer';
-import { IAgileSoftMovie, IAgileSoftMovieResults, IAgileSoftUser, IRequestAction, IResponseAction } from 'src/utils/interfaces';
+import { IAgileSoftMovie, IAgileSoftMovieResults, IAgileSoftUser, IResponseAction } from 'src/utils/interfaces';
 import ACTIONS from '../utils/actions';
 import { apiRequest } from '../utils/standardActions';
-//import { ignoreDispatchedActions } from '../utils/utils';
 import CustomCarousel from '../components/CustomCarousel/CustomCarousel';
 import CustomPosters from '../components/CustomPosters/CustomPosters';
-
 
 function Home() {
   const { Common, Fonts, Gutters, Layout } = useTheme()
@@ -82,12 +76,6 @@ function Home() {
   useEffect(() => { if(popularPage !== 1) { updatePopular() } },[popularPage])
   useEffect(() => { if(nowPlayingCurrentPage !== 1) { updateNowPlaying() } },[nowPlayingCurrentPage])
 
-/*  const changeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
-    console.log(theme,darkMode);
-    dispatch(changeThemeAction({ theme, darkMode }))
-  }
-*/
-
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     const paddingToBottom = 800;
     return layoutMeasurement.height + contentOffset.y >=
@@ -109,35 +97,7 @@ function Home() {
       {  navigation.state.index === 0 && NOW_PLAYING_ACC && NOW_PLAYING && <CustomCarousel mode={"stretch"} updateResults={updateEventNowPlaying} imageBaseUrl={NOW_PLAYING.imageBaseUrl} data={NOW_PLAYING_ACC}/> }
       {  navigation.state.index === 0 && POPULAR_ACC && POPULAR && <CustomPosters mode={"cover"} imageBaseUrl={POPULAR.imageBaseUrl} data={POPULAR_ACC}/> }
 
-      {/*<ActivityIndicator size={'large'} style={[Gutters.largeVMargin]} />*}
-      {/*
-      <Text style={styles.welcome}>{t('welcome')}</Text>
-      <Text style={styles.instructions}>{t('instructions')}</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
-      {user && <Text>user: </Text>}
-      <Text>{JSON.stringify(user)}</Text>
-      <Button title={t('fetchUser')} onPress={fetchUser} />*/}
 
-      {/*
-      <TouchableOpacity
-        style={[Common.button.rounded, Gutters.regularBMargin]}
-        onPress={() => changeTheme({ darkMode: null })}
-      >
-        <Text style={Fonts.textRegular}>Auto</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[Common.button.outlineRounded, Gutters.regularBMargin]}
-        onPress={() => changeTheme({ darkMode: true })}
-      >
-        <Text style={Fonts.textRegular}>Dark</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[Common.button.outline, Gutters.regularBMargin]}
-        onPress={() => changeTheme({ darkMode: false })}
-      >
-        <Text style={Fonts.textRegular}>Light</Text>
-      </TouchableOpacity>
-      */}
     </ScrollView>
   );
 }
