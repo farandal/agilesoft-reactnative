@@ -8,10 +8,12 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const appendAuthToken: any = () => {
-  const token = AsyncStorage.getItem('token');
+const appendAuthToken: any = async () => {
+  const token = await AsyncStorage.getItem('token');
+  console.log(token);
     const headerObj:any = {};
     if (token) {
+      console.log("APPENDING TOKEN",token);
       headerObj['Authorization'] = `Bearer ${token}`;
     }
     return headerObj;

@@ -1,7 +1,11 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import { Config } from '../config';
-
+/*
+original_title`)}
+original_language
+release_date`)}</
+*/
 const resources = {
   en: {
     translation: {
@@ -12,7 +16,13 @@ const resources = {
       detail: 'Detail',
       home: 'Home',
       welcomeuser: 'Welcome ',
-      required: 'Required'
+      required: 'Required',
+      original_title: 'Original title',
+      original_language: 'Original Language',
+      release_date: "Release Date",
+      appearance: "Appearance",
+      language: "Language",
+      cache: "Clean Cache"
 
     },
   },
@@ -23,7 +33,13 @@ const resources = {
       detail: 'Detalle',
       home: 'Inicio',
       welcomeuser: 'Bienvenido ',
-      required: 'Campo requerido'
+      required: 'Campo requerido',
+      original_title: ' Titulo Original',
+      original_language: 'Idioma original',
+      release_date: "Fecha de estreno",
+      appearance: "Apariencia",
+      language: "Idioma",
+      cache: "limpiar Cache"
     },
   },
 };

@@ -33,8 +33,8 @@
    let payload:IRequestPayload = action && action.payload ?  action.payload : {}
    let config: any = {};
 
-   console.log("HTTPREQUESTER Ha capturado el request");
-   console.log(action);
+   //console.log("HTTPREQUESTER Ha capturado el request");
+   //console.log(action);
 
    let queryString = "";
    if(payload && payload.query) {
@@ -61,7 +61,7 @@
 
          break;
        case 'POST':
-         console.log("POST");
+         //console.log("POST");
          response = yield call(
            Api.sendPostRequest,
            payload && payload.params
@@ -141,9 +141,9 @@
          );
          break;
      }
-     console.log(response);
-     if (response.status === 200) {
-       console.log("response 200",response.data);
+     //console.log(response);
+     if (response.status >= 200 && response.status <= 299) {
+       //console.log("response 200",response.data);
        yield put({
          type: action.route.SUCCESS,
          json: response.data,

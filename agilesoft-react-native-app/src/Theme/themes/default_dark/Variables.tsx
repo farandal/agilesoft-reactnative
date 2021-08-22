@@ -7,7 +7,14 @@ const Colors: ThemeColors = {
 };
 
 const NavigationColors: Partial<ThemeNavigationColors> = {
-  primary: Colors.primary,
+  primary: 'white',
+  background: '#400E3F',
+  card: '#2F082E',
+  text:"#FFFFFF",
+  border:"#2F082E",
+  notification:"#9933FF"
+
+  //  color: 'white',
 };
 
 export default {

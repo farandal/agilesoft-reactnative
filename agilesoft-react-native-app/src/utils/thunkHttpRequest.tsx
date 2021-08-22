@@ -166,7 +166,7 @@
          break;
      }
 
-     console.log("THUNK REQUEST POST RESPONSE ",response.status,response.data)
+     //console.log("THUNK REQUEST POST RESPONSE ",response.status,response.data)
      if (response.status >= 200 && response.status <= 299) {
 
        return {
@@ -175,14 +175,14 @@
          message: 'success',
        };
      } else {
-       console.log("FAILURE RESPONSE")
+       //console.log("FAILURE RESPONSE")
        let _object =  {type: action.route.FAILURE,
        json: response && response.data ? response.data : {},
        message: response && response.data && response.data.message
            ? response.data.message
            : ( response.data && response.data.error
              ? response.data.error : 'no-error-message')};
-             console.log(_object);
+             //console.log(_object);
        return _object;
      }
    } catch (e:any) {

@@ -24,17 +24,17 @@ export default function ({FontSize, Colors}: ThemeVariables): ThemeFonts {
       color: Colors.text,
     },
     titleSmall: {
-      fontSize: FontSize.small * 2,
+      fontSize: FontSize.small ,
       fontWeight: 'bold',
       color: Colors.text,
     },
     titleRegular: {
-      fontSize: FontSize.regular * 2,
+      fontSize: FontSize.regular ,
       fontWeight: 'bold',
       color: Colors.text,
     },
     titleLarge: {
-      fontSize: FontSize.large * 2,
+      fontSize: FontSize.large ,
       fontWeight: 'bold',
       color: Colors.text,
     },

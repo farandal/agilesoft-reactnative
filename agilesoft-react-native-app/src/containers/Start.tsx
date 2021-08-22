@@ -6,7 +6,7 @@ import {useTheme} from '../Theme';
 import {fetchUserAsync} from '../actions/usersActions';
 import changeThemeAction from '../actions/themeActions';
 import Colors from '../constants/colors';
-import useSelector from '../utils/useSelector';
+import useSelector from '../utils/useStateSelector';
 import { ThemeState } from 'src/reducers/themeReducer';
 import Splash from '../components/Slash';
 

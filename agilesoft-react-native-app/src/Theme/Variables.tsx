@@ -16,7 +16,6 @@ import {
  * Colors
  */
 export const Colors: ThemeColors = {
-  // Example colors:
   transparent: 'rgba(0,0,0,0)',
   inputBackground: '#FFFFFF',
   white: '#ffffff',
@@ -24,6 +23,10 @@ export const Colors: ThemeColors = {
   primary: '#E14032',
   success: '#28a745',
   error: '#dc3545',
+  aliceBlue: '#F5FCFF',
+  darkCharcoal: '#333333',
+  grey: '#CCC',
+  greyTransparent: 'rgba(100,100,100,0.3)',
 };
 
 export const NavigationColors: Partial<ThemeNavigationColors> = {
