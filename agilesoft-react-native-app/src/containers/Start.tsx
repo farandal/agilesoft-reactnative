@@ -34,7 +34,6 @@ function Start() {
     <View style={[Layout.fill, Layout.colCenter]}>
       <Splash/>
       <ActivityIndicator size={'large'} style={[Gutters.largeVMargin]} />
-
     </View>
   );
 }

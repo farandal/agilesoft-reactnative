@@ -1,20 +1,20 @@
-import React, {memo} from 'react';
+import React, {FC, memo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import Colors from '../constants/colors';
 
-function Settings() {
+const SettingsComponent:FC<{}> = () => {
   const {t, i18n} = useTranslation();
   return (
-    <View style={styles.container}>
+   <>
       <Text>{t('settings')}</Text>
       <Button title={t('english')} onPress={() => i18n.changeLanguage('en')} />
-      <Button title={t('french')} onPress={() => i18n.changeLanguage('fr')} />
-    </View>
+      <Button title={t('spanish')} onPress={() => i18n.changeLanguage('fr')} />
+  </>
   );
 }
 
-export default memo(Settings);
+export default memo(SettingsComponent);
 
 const styles = StyleSheet.create({
   container: {

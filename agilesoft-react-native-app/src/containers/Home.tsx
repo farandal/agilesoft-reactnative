@@ -16,10 +16,11 @@ function Home() {
   const theme = useSelector(state => state.theme);
   const {t} = useTranslation();
   const dispatch = useDispatch();
-  const fetchUser = () => {
+
+  /*const fetchUser = () => {
     const userId = '1';
     dispatch(fetchUserAsync.request(userId));
-  };
+  };*/
 
   const instructions = Platform.select({
     ios: t('iosInstruction'),

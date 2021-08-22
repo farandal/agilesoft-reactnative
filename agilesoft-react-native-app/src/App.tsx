@@ -6,16 +6,19 @@ import { useTranslation } from 'react-i18next';
 import RNBootSplash from 'react-native-bootsplash';
 import Icon from 'react-native-easy-icon';
 import Home from './containers/Home';
-import Settings from './containers/Settings';
+import SettingsComponent from './containers/SettingsComponent';
 import { useTheme } from './Theme';
 import { sleep } from './utils/async';
 import NavigationService, { navigationRef } from './lib/NavigationService';
-import { SafeAreaView, StatusBar } from 'react-native';
+import { SafeAreaView, StatusBar, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Start from './containers/Start';
 import Detail from './containers/Detail';
 import { Ionicons } from 'react-native-vector-icons';
 import Splash from './components/Slash';
+import Login from './containers/Login';
+import Toast from 'react-native-toast-message';
+
 export type AppTabParamList = {
   Home: undefined;
   Settings: { userID?: string };
@@ -55,9 +58,10 @@ const App = () => {
   function HomeScreen({ navigation }) {
     return <Home />;
   }
-  function SettingsScreen({ navigation }) {
-    return <Settings />;
-  }
+  /*function SettingsScreen({ navigation }) {
+
+    return  <View style={[Layout.fill, { backgroundColor: colors.card }]}><SettingsComponent /></View>;
+  }*/
 
   function HomeStackScreen() {
     return (
@@ -68,18 +72,20 @@ const App = () => {
     );
   }
 
+  /*
   const SettingsStack = createStackNavigator();
 
   function SettingsStackScreen() {
     return (
       <SettingsStack.Navigator>
         <SettingsStack.Screen name="Settings" component={SettingsScreen} />
-        {/* <SettingsStack.Screen name="Details" component={DetailsScreen} />*/}
       </SettingsStack.Navigator>
     );
   }
+  */
 
-  return (
+return (
+    <>
     <SafeAreaView style={[Layout.fill, { backgroundColor: colors.card }]}>
       <NavigationContainer
         theme={NavigationTheme}
@@ -124,6 +130,7 @@ const App = () => {
             }}
             component={HomeStackScreen}
           />
+          {/*
           <Tab.Screen
             name="Settings"
             options={{
@@ -139,9 +146,27 @@ const App = () => {
             }}
             component={SettingsStackScreen}
           />
+          */}
+          <Tab.Screen
+            name="Login"
+            options={{
+              tabBarLabel: t('login'),
+              tabBarIcon: ({ focused, color, size }) => (
+                <Icon
+                  name={focused ? 'account' : 'account-outline'}
+                  type="material-community"
+                  size={size}
+                  color={color}
+                />
+              ),
+            }}
+            component={Login}
+          />
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaView>
+    <Toast ref={(ref) => Toast.setRef(ref)} />
+    </>
   );
 };
 
