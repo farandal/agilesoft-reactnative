@@ -64,24 +64,27 @@ const reducer = (state: IState = InitialState, action: IResponseAction) => {
 
   switch (action.type) {
 
+    case ACTIONS.CLEAN_CACHE.ACTION:
+      return {
+        ...state,
+        GET_NOW_PLAYING: [],
+        NOW_PLAYING_ACC: [],
+        POPULAR_ACC: [],
+        GET_POPULAR: []
+      }
+
     case ACTIONS.GET_NOW_PLAYING.SUCCESS:
-     // state["NOW_PLAYING_ACC"] && console.log(`ACUMULADOR NOW PLAYING Anteirores:${state["NOW_PLAYING_ACC"].length}, nuevos: ${action.json.data.length}`)
-
-     // if(state["NOW_PLAYING_ACC"] && state["NOW_PLAYING_ACC"].length !== 20) {
-
-        return {
+      return {
         ...state,
         NOW_PLAYING_ACC: PARSERS.ACUMULADOR_NOW_PLAYING(state["NOW_PLAYING_ACC"],action.json.data)
       }
-   // }
 
     case ACTIONS.GET_POPULAR.SUCCESS:
-   //   if(state["POPULAR_ACC"] && state["POPULAR_ACC"].length === 20) {
+
         return {
           ...state,
           POPULAR_ACC: PARSERS.ACUMULADOR_POPULARES(state["POPULAR_ACC"],action.json.data)
         }
-   //   }
 
 
     case 'SET_COMPONENT_STATE':

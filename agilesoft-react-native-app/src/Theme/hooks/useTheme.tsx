@@ -18,16 +18,17 @@ import {
 } from '../theme.type';
 
 import {ThemeState} from '../../reducers/themeReducer';
+import useStateSelector from '../../utils/useStateSelector';
 
 export default function () {
   // Get the scheme device
   const colorScheme = useColorScheme();
 
   // Get current theme from the store
-  const currentTheme = useSelector(
+  const currentTheme = useStateSelector(
     (state: {theme: ThemeState}) => state.theme.theme || 'default',
   );
-  const isDark = useSelector(
+  const isDark = useStateSelector(
     (state: {theme: ThemeState}) => state.theme.darkMode,
   );
   const darkMode = isDark === null ? colorScheme === 'dark' : isDark;

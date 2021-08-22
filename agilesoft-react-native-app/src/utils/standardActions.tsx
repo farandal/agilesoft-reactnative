@@ -35,3 +35,19 @@ import thunkHttpRequest from './thunkHttpRequest';
    type: action.ACTION,
    payload: payload,
  })};
+
+
+
+export const setComponentState = (componentId: string, state: any) => {
+  // debugger;
+   return {
+     type: "SET_COMPONENT_STATE",
+     componentId,
+     state
+   };
+ };
+
+ export const unsetComponentState = (componentId: string) => ({
+   type: "UNSET_COMPONENT_STATE",
+   componentId
+ });

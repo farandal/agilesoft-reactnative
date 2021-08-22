@@ -13,13 +13,13 @@ import {
   TextInput,
   Settings,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../Theme';
 import { fetchUserAsync } from '../actions/usersActions';
 import ACTIONS from '../utils/actions';
 import changeThemeAction from '../actions/themeActions';
 //import Colors from '../constants/colors';
-import useSelector from '../utils/useSelector';
+import useStateSelector from '../utils/useStateSelector';
 import { ThemeState } from '../reducers/themeReducer';
 import CustomTextInput from '../components/CustomTextInput';
 import { useForm, Controller } from 'react-hook-form';
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 
-  loginBtn: {
+  customBtn: {
     width: '80%',
     borderRadius: 25,
     height: 50,
@@ -98,9 +98,9 @@ const Login: FC<{}> = () => {
     dispatch(actionDispatch(ACTIONS.USER_LOGOUT,{}));
   }
 
-  const stateApp:IState = useSelector<IState>(state => state.app );
-  const action:IResponseAction = useSelector<IResponseAction>(state => state.app.action );
-  const user:IAgileSoftUser = useSelector<IAgileSoftUser>(state => state.app.user );
+  const stateApp:IState = useStateSelector<IState>(state => state.app );
+  const action:IResponseAction = useStateSelector<IResponseAction>(state => state.app.action );
+  const user:IAgileSoftUser = useStateSelector<IAgileSoftUser>(state => state.app.user );
 
   useEffect(() => {
     if (action && action.type) {
@@ -189,21 +189,30 @@ const Login: FC<{}> = () => {
 
       <TouchableOpacity
         onPress={handleSubmit(onSubmit)}
-        style={styles.loginBtn}>
+
+        style={styles.customBtn}>
         <Text style={styles.loginText}>{t(`login`)}</Text>
       </TouchableOpacity>
         </>
     :
         <>
-            <Text>{`${t(`welcomeuser`)} ${user.firstName}!`}</Text>
+      <View style={[Layout.fullWidth, Layout.center]} >
+            <Text style={[Layout.fullWidth,Fonts.textCenter,Fonts.titleLarge,{marginVertical:10}]}>
+            {`${t(`welcomeuser`)} ${user.firstName}  ${user.lastName}!`}
+            </Text>
+
             <SettingsComponent />
 
             <TouchableOpacity
             onPress={logoutFn}
-            style={styles.loginBtn}>
+            style={styles.customBtn}>
             <Text style={styles.loginText}>{t(`logout`)}</Text>
           </TouchableOpacity>
-        </>
+
+          </View>
+       </>
+
+
     }
     </View>
   );

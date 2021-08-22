@@ -114,3 +114,4 @@ export interface IAgileSoftUser {
     email: string;
     createdAt: Date;
 }
+

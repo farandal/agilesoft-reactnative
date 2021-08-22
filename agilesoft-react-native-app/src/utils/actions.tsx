@@ -76,7 +76,11 @@ const ACTIONS:IActions = {
     METHOD: "GET",
     AUTH: true,
     PARSER: PARSERS.GET_DETAIL
+  },
+  CLEAN_CACHE : {
+    ACTION: 'CLEAN_CACHE'
   }
+
 };
 
 export default ACTIONS;

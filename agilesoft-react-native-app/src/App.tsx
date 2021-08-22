@@ -25,6 +25,7 @@ import { actionDispatch, apiRequest } from './utils/standardActions';
 import ACTIONS from './utils/actions';
 import SystemMessage from './components/SystemMessage';
 import { Config } from './config';
+import useStateSelector from './utils/useStateSelector';
 
 export type AppTabParamList = {
   Home: undefined;
@@ -53,10 +54,10 @@ const App = () => {
     });
   }, []);
 
-  const auth: IAgileSoftGetAuth = useSelector(
+  const auth: IAgileSoftGetAuth = useStateSelector(
     (state: DefaultRootState) => state.app.auth
   );
-  const authcheck: string = useSelector(
+  const authcheck: string = useStateSelector(
     (state: DefaultRootState) => state.app.authCheck
   );
   //const stateApp:IState = useSelector<IState>(state => state.app );

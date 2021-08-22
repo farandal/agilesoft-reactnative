@@ -1,46 +1,46 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ActivityIndicator, Button, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useTheme} from '../Theme';
 import {fetchUserAsync} from '../actions/usersActions';
-import changeThemeAction from '../actions/themeActions';
+//import changeThemeAction from '../actions/themeActions';
 import Colors from '../constants/colors';
-import useSelector from '../utils/useSelector';
+import useStateSelector from '../utils/useStateSelector';
 import { ThemeState } from 'src/reducers/themeReducer';
 import { IAgileSoftMovie, IAgileSoftMovieResults, IAgileSoftUser, IRequestAction, IResponseAction } from 'src/utils/interfaces';
 import ACTIONS from '../utils/actions';
 import { apiRequest } from '../utils/standardActions';
 //import { ignoreDispatchedActions } from '../utils/utils';
 import CustomCarousel from '../components/CustomCarousel/CustomCarousel';
+import CustomPosters from '../components/CustomPosters/CustomPosters';
 
 
 function Home() {
   const { Common, Fonts, Gutters, Layout } = useTheme()
 
-  const theme = useSelector(state => state.theme);
+  const theme = useStateSelector(state => state.theme);
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
-  const user:IAgileSoftUser = useSelector<IAgileSoftUser>(state => state.app.user );
-  const action:IResponseAction = useSelector<IResponseAction>(state => state.app.action );
-  const navigation:any = useSelector(state => state.app.currentNav );
+  const user:IAgileSoftUser = useStateSelector<IAgileSoftUser>(state => state.app.user );
+  const action:IResponseAction = useStateSelector<IResponseAction>(state => state.app.action );
+  const navigation:any = useStateSelector(state => state.app.currentNav );
 
-  const NOW_PLAYING:IAgileSoftMovieResults = useSelector<IAgileSoftMovieResults>(state => state.app.GET_NOW_PLAYING );
-  const POPULAR:IAgileSoftMovieResults = useSelector<IAgileSoftMovieResults>(state => state.app.GET_POPULAR );
+  const NOW_PLAYING:IAgileSoftMovieResults = useStateSelector<IAgileSoftMovieResults>(state => state.app.GET_NOW_PLAYING );
+  const POPULAR:IAgileSoftMovieResults = useStateSelector<IAgileSoftMovieResults>(state => state.app.GET_POPULAR );
 
-  const NOW_PLAYING_ACC:IAgileSoftMovie[] = useSelector<IAgileSoftMovie[]>(state => {
+  const NOW_PLAYING_ACC:IAgileSoftMovie[] = useStateSelector<IAgileSoftMovie[]>(state => {
     if(!state.app.NOW_PLAYING_ACC) return []
     return state.app.NOW_PLAYING_ACC
   });
-  const POPULAR_ACC:IAgileSoftMovie[] = useSelector<IAgileSoftMovie[]>(state => {
+  const POPULAR_ACC:IAgileSoftMovie[] = useStateSelector<IAgileSoftMovie[]>(state => {
     if(!state.app.POPULAR_ACC) return []
     return state.app.POPULAR_ACC
   } );
 
   const [nowPlayingRetrievedPages,setNowPlayingRetrievedPages] = useState<number[]>([]);
   const [popularRetrievedPages,setPopularRetrievedPages] = useState<number[]>([]);
-
   const [nowPlayingCurrentPage,setNowPlayingCurrentPage] = useState<number>(1);
   const [popularPage,setPopularPage] = useState<number>(1);
  // dispatch(apiRequest(ACTIONS.GET_ME, {}));
@@ -48,7 +48,7 @@ function Home() {
   useEffect(() => {
     let name = navigation.state.routes[navigation.state.index].name;
     let idx = navigation.state.index;
-    //console.log(navigation.state.index);
+    console.log(navigation.state.index);
     if(idx===0) {
       updateNowPlaying();
       updatePopular();
@@ -70,36 +70,44 @@ function Home() {
   }
 
   const updateEventNowPlaying = (nextPage:number) => {
-    console.log(`Bring page ${nextPage}`)
+    console.log(`Trigger now playing page ${nextPage}`)
     setNowPlayingCurrentPage(nextPage);
   }
 
-  const updateEventPopular = (nextPage:number) => {
-    console.log(`Bring page ${nextPage}`)
-    setPopularPage(nextPage);
+  const updateEventPopular = () => {
+    console.log(`Trigger popular page ${popularPage+1}`)
+    setPopularPage(popularPage+1);
   }
 
   useEffect(() => { if(popularPage !== 1) { updatePopular() } },[popularPage])
   useEffect(() => { if(nowPlayingCurrentPage !== 1) { updateNowPlaying() } },[nowPlayingCurrentPage])
 
-  const changeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
+/*  const changeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
     console.log(theme,darkMode);
     dispatch(changeThemeAction({ theme, darkMode }))
   }
+*/
+
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 800;
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+  };
 
   return (
-    <ScrollView>
+    <ScrollView
 
-      {/*style={[Layout.fill, Layout.colCenter]}*/}
-
-
-      {  NOW_PLAYING && NOW_PLAYING.data && <CustomCarousel mode={"stretch"} updateResults={updateEventNowPlaying} imageBaseUrl={NOW_PLAYING.imageBaseUrl} data={NOW_PLAYING_ACC}/> }
-
-      {  POPULAR && POPULAR.data && POPULAR.data.map(item => {
-                return <Text>{item.original_title}</Text>
-          })
+    onScroll={({nativeEvent}) => {
+      if (isCloseToBottom(nativeEvent)) {
+        updateEventPopular();
       }
+    }}
+    scrollEventThrottle={400}
 
+    >
+
+      {  navigation.state.index === 0 && NOW_PLAYING_ACC && NOW_PLAYING && <CustomCarousel mode={"stretch"} updateResults={updateEventNowPlaying} imageBaseUrl={NOW_PLAYING.imageBaseUrl} data={NOW_PLAYING_ACC}/> }
+      {  navigation.state.index === 0 && POPULAR_ACC && POPULAR && <CustomPosters mode={"cover"} imageBaseUrl={POPULAR.imageBaseUrl} data={POPULAR_ACC}/> }
 
       {/*<ActivityIndicator size={'large'} style={[Gutters.largeVMargin]} />*}
       {/*

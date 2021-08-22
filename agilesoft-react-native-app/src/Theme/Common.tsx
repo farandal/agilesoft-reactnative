@@ -4,6 +4,7 @@ import {ThemeCommonParams} from './theme.type';
 
  const Common = ({ Colors, ...args }: ThemeCommonParams) => {
   return {
+
     button: buttonStyles({ Colors, ...args }),
     ...StyleSheet.create({
       backgroundPrimary: {
@@ -22,6 +23,17 @@ import {ThemeCommonParams} from './theme.type';
         marginTop: 10,
         marginBottom: 10,
       },
+      customBtn: {
+        width: '80%',
+        borderRadius: 25,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 40,
+        backgroundColor: '#FF1493',
+      },
+
+
     }),
   }
 }
