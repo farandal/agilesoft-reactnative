@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ScrollView} from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -10,7 +10,7 @@ import { apiRequest } from '../utils/standardActions';
 import CustomCarousel from '../components/CustomCarousel/CustomCarousel';
 import CustomPosters from '../components/CustomPosters/CustomPosters';
 
-function Home() {
+const Home:FC<{navigation:any}> = ({navigation}) => {
   const { Common, Fonts, Gutters, Layout } = useTheme()
 
   const theme = useStateSelector(state => state.theme);
@@ -19,7 +19,7 @@ function Home() {
 
   const user:IAgileSoftUser = useStateSelector<IAgileSoftUser>(state => state.app.user );
   const action:IResponseAction = useStateSelector<IResponseAction>(state => state.app.action );
-  const navigation:any = useStateSelector(state => state.app.currentNav );
+  const navigationState:any = useStateSelector(state => state.app.currentNav );
 
   const NOW_PLAYING:IAgileSoftMovieResults = useStateSelector<IAgileSoftMovieResults>(state => state.app.GET_NOW_PLAYING );
   const POPULAR:IAgileSoftMovieResults = useStateSelector<IAgileSoftMovieResults>(state => state.app.GET_POPULAR );
@@ -38,17 +38,20 @@ function Home() {
   const [nowPlayingCurrentPage,setNowPlayingCurrentPage] = useState<number>(1);
   const [popularPage,setPopularPage] = useState<number>(1);
  // dispatch(apiRequest(ACTIONS.GET_ME, {}));
-
+ const isFocused = navigation.isFocused();
   useEffect(() => {
-    let name = navigation.state.routes[navigation.state.index].name;
-    let idx = navigation.state.index;
-    console.log(navigation.state.index);
-    if(idx===0) {
+    let name = navigationState.state.routes[navigationState.state.index].name;
+    let idx = navigationState.state.index;
+    console.log(navigationState.state.index);
+    console.log(navigationState.state);
+
+
+    if(isFocused) {
       updateNowPlaying();
       updatePopular();
     }
      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigation]);
+  }, [navigationState]);
 
   const updateNowPlaying = () => {
     if(nowPlayingRetrievedPages.includes(nowPlayingCurrentPage)) return;
@@ -73,6 +76,10 @@ function Home() {
     setPopularPage(popularPage+1);
   }
 
+  const verDetalle = (movie:IAgileSoftMovie,imageBasePath:string) => {
+    navigation.navigate('Detalle', { movie, imageBasePath  })
+  }
+
   useEffect(() => { if(popularPage !== 1) { updatePopular() } },[popularPage])
   useEffect(() => { if(nowPlayingCurrentPage !== 1) { updateNowPlaying() } },[nowPlayingCurrentPage])
 
@@ -94,8 +101,8 @@ function Home() {
 
     >
 
-      {  navigation.state.index === 0 && NOW_PLAYING_ACC && NOW_PLAYING && <CustomCarousel mode={"stretch"} updateResults={updateEventNowPlaying} imageBaseUrl={NOW_PLAYING.imageBaseUrl} data={NOW_PLAYING_ACC}/> }
-      {  navigation.state.index === 0 && POPULAR_ACC && POPULAR && <CustomPosters mode={"cover"} imageBaseUrl={POPULAR.imageBaseUrl} data={POPULAR_ACC}/> }
+      {  navigationState.state.index === 0 && NOW_PLAYING_ACC && NOW_PLAYING && <CustomCarousel mode={"stretch"} updateResults={updateEventNowPlaying} imageBaseUrl={NOW_PLAYING.imageBaseUrl} onPress={verDetalle} data={NOW_PLAYING_ACC}/> }
+      {  navigationState.state.index === 0 && POPULAR_ACC && POPULAR && <CustomPosters mode={"cover"} onPress={verDetalle} imageBaseUrl={POPULAR.imageBaseUrl} data={POPULAR_ACC}/> }
 
 
     </ScrollView>

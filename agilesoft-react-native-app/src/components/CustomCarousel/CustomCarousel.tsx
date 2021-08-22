@@ -14,7 +14,7 @@ interface ICustomSliderProps {
   width?: number;
   mode?: 'contain' | 'cover' | 'stretch' | 'repeat' | 'center';
 
-  onPress?: () => any;
+  onPress?:(movie: IAgileSoftMovie,imageBasePath:string) => void;
 }
 
 const CustomCarousel:FC<ICustomSliderProps> = ({data,imageBaseUrl,updateResults,width,height,mode,onPress}) => {
@@ -97,7 +97,7 @@ const CustomCarousel:FC<ICustomSliderProps> = ({data,imageBaseUrl,updateResults,
         />
         <Text style={estilos.counter}
         >
-          {index}
+          <Button title="Detalle" onPress={onPress ? (e) => { onPress(data[index],imageBaseUrl) } : (e) => { console.log(data[index]) }} />
         </Text>
         </>
       )

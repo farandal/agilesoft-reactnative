@@ -40,7 +40,7 @@ const SettingsComponent:FC<{}> = () => {
    <>
 <View style={[Layout.fullWidth, Layout.center]} >
 
-    <Text style={[Layout.fullWidth,Fonts.textCenter,Fonts.textLarge,{color:Colors.white,backgroundColor:Colors.greyTransparent}]}>Apariencia</Text>
+    <Text style={[Layout.fullWidth,Fonts.textCenter,Fonts.textRegular,{color:Colors.white,backgroundColor:Colors.greyTransparent}]}>{t('appearance')}</Text>
 
     <View style={[Layout.flex,{marginVertical:20}]}>
       <Switch
@@ -52,14 +52,14 @@ const SettingsComponent:FC<{}> = () => {
       />
     </View>
 
-    <Text style={[Layout.fullWidth,Fonts.textCenter,Fonts.textLarge,{color:Colors.white,backgroundColor:Colors.greyTransparent}]}>Idioma</Text>
+    <Text style={[Layout.fullWidth,Fonts.textCenter,Fonts.textRegular,{color:Colors.white,backgroundColor:Colors.greyTransparent}]}>{t('language')}</Text>
 
     <View style={[Layout.flex,{marginVertical:20}]}>
       <Button   title={t('english')} onPress={() => i18n.changeLanguage('en')} />
       <Button   title={t('spanish')} onPress={() => i18n.changeLanguage('fr')} />
     </View>
 
-    <Text style={[Layout.fullWidth,Fonts.textCenter,Fonts.textLarge,{color:Colors.white,backgroundColor:Colors.greyTransparent}]}>Cache</Text>
+    <Text style={[Layout.fullWidth,Fonts.textCenter,Fonts.textRegular,{color:Colors.white,backgroundColor:Colors.greyTransparent}]}>{t('cache')}</Text>
 
     <View style={[Layout.flex,{marginVertical:20}]}>
       <Button   title={t('clean')} onPress={cleanCache} />

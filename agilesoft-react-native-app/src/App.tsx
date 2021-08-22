@@ -86,22 +86,17 @@ const App = () => {
     NavigationService.isReady = false;
   }, []);
 
-  function DetailsScreen() {
-    return <Detail />;
-  }
-  function HomeScreen({ navigation }) {
-    return <Home />;
-  }
+
   /*function SettingsScreen({ navigation }) {
 
     return  <View style={[Layout.fill, { backgroundColor: colors.card }]}><SettingsComponent /></View>;
   }*/
 
-  function HomeStackScreen() {
+  function HomeStackScreen({ navigation }) {
     return (
       <HomeStack.Navigator>
-        <HomeStack.Screen name="Home" component={HomeScreen} />
-        <HomeStack.Screen name="Details" component={DetailsScreen} />
+        <HomeStack.Screen name="Home" component={Home} />
+        <HomeStack.Screen name="Detalle" component={Detail} />
       </HomeStack.Navigator>
     );
   }
@@ -125,9 +120,11 @@ const App = () => {
   const tabNavChange = ({ navigation }) => ({
     state: e => {
       // Do something with the state
-      //console.log('state changed', e.data);
+      console.log('state changed', e.data);
+      console.log("NAVIGATION",navigation)
       dispatch(actionDispatch(ACTIONS.NAVIGATION, e.data));
       // Do something with the `navigation` object
+
       if (!navigation.canGoBack()) {
         //console.log("we're on the initial screen");
       }

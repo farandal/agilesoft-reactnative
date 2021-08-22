@@ -12,18 +12,19 @@ export default class NavigationService {
 
   public static navigate(name: string, params?: Record<string, unknown>) {
     if (this.isReady && navigationRef.current) {
+      console.log("NAVIGATING TO ",name)
       navigationRef.current.navigate(name, params);
     } else {
-      // You can decide what to do if the app hasn't mounted
-      // You can ignore this, or add these actions to a queue you can call later
+
     }
   }
 
   public static dispatch(action: NavigationAction) {
     if (this.isReady && navigationRef.current) {
+      console.log("DISPATCHING ",action)
       navigationRef.current.dispatch(action);
     }
   }
 
-  // add other navigation functions that you need and export them
+  // otras...
 }
