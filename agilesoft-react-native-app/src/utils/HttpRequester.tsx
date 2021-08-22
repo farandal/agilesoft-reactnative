@@ -38,6 +38,7 @@ class HttpRequester implements HttpMethodsInterface {
   ): Promise<AxiosResponse> => {
     if (auth) {
       const tokenHeader = await appendAuthToken();
+      console.log("TOKEN HEADER",tokenHeader)
       if (config && config.headers) {
         config.headers = { ...config.headers, ...tokenHeader };
       } else {

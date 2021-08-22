@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { IAgileSoftGetAuth } from '../utils/interfaces';
+import { IAgileSoftActors, IAgileSoftGetAuth, IAgileSoftMovieResults, IAgileSoftUser } from '../utils/interfaces';
 
 const PARSERS = {
   DEFAULT_ERROR_PARSING:  (json: any) => {
@@ -9,17 +9,19 @@ const PARSERS = {
     let auth_response: IAgileSoftGetAuth = json.data;
     return auth_response;
   },
-  GET_ME:  (json: any): any => {
+  GET_ME:  (json: any): IAgileSoftUser => {
     return json.data;
   },
-  GET_NOW_PLAYING: (json: any): any => {
-    return json.data;
+  GET_NOW_PLAYING: (json: any): IAgileSoftMovieResults => {
+    console.log("NOW PLAYING")
+    console.log(json.data.length);
+    return json;
   },
-  GET_POPULAR :(json: any): any => {
-    return json.data;
+  GET_POPULAR :(json: any): IAgileSoftMovieResults => {
+    return json;
   },
-  GET_DETAIL : (json: any): any => {
-    return json.data;
+  GET_DETAIL : (json: any): IAgileSoftActors => {
+    return json;
   }
 };
 

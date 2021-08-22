@@ -10,6 +10,7 @@ import './i18n';
 import {enableScreens} from 'react-native-screens';
 //import { useTheme } from './Theme';
 
+
 //enableScreens(); //https://reactnavigation.org/docs/react-native-screens/
 
 export default function Root() {

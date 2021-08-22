@@ -13,8 +13,13 @@ const ACTIONS:IActions = {
     SUCCESS: 'DEFAULT_SUCCESS',
     FAILURE: 'DEFAULT_FAILURE'
   },
+  NAVIGATION: {
+    ACTION: 'NAVIGATION',
+    SUCCESS: 'NAVIGATION_SUCCESS',
+    FAILURE: 'NAVIGATION_FAILURE'
+  },
   USER_LOGIN: {
-    ACTION: 'USER_LOGIN_REQUEST',
+    ACTION: 'USER_LOGIN',
     SUCCESS: 'USER_LOGIN_SUCCESS',
     FAILURE: 'USER_LOGIN_FAILURE',
     PATH: "/auth/login",
@@ -27,12 +32,21 @@ const ACTIONS:IActions = {
     SUCCESS: 'USER_LOGOUT_SUCCESS',
     FAILURE: 'USER_LOGOUT_FAILURE',
   },
+  GET_REFRESH_TOKEN: {
+    ACTION: 'GET_REFRESH_TOKEN',
+    SUCCESS: 'GET_REFRESH_TOKEN_SUCCESS',
+    FAILURE: 'GET_REFRESH_TOKEN_FAILURE',
+    PATH: "/auth/refresh",
+    METHOD: "POST",
+    AUTH: true
+   // PARSER: PARSERS.GET_ME
+  },
   GET_ME: {
-    ACTION: 'GET_ME_REQUEST',
+    ACTION: 'GET_ME',
     SUCCESS: 'GET_ME_SUCCESS',
     FAILURE: 'GET_ME_FAILURE',
     PATH: "/user/me",
-    METHOD: "POST",
+    METHOD: "GET",
     AUTH: true,
     PARSER: PARSERS.GET_ME
   },
@@ -41,7 +55,7 @@ const ACTIONS:IActions = {
     SUCCESS: 'GET_NOW_PLAYING_SUCCESS',
     FAILURE: 'GET_NOW_PLAYING_FAILURE',
     PATH: "/movies/now_playing",
-    METHOD: "POST",
+    METHOD: "GET",
     AUTH: true,
     PARSER: PARSERS.GET_NOW_PLAYING
   },
@@ -50,7 +64,7 @@ const ACTIONS:IActions = {
     SUCCESS: 'GET_POPULAR_SUCCESS',
     FAILURE: 'GET_POPULAR_FAILURE',
     PATH: "/movies/popular",
-    METHOD: "POST",
+    METHOD: "GET",
     AUTH: true,
     PARSER: PARSERS.GET_POPULAR
   },
@@ -59,7 +73,7 @@ const ACTIONS:IActions = {
     SUCCESS: 'GET_DETAIL_SUCCESS',
     FAILURE: 'GET_DETAIL_FAILURE',
     PATH: "/movies/:id/actors",
-    METHOD: "POST",
+    METHOD: "GET",
     AUTH: true,
     PARSER: PARSERS.GET_DETAIL
   }

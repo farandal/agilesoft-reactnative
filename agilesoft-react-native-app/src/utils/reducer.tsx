@@ -13,6 +13,18 @@ import PARSERS from './parsers';
 
 const reducer = (state: IState = InitialState, action: IResponseAction) => {
 
+
+  if(action.json && action.json.error && action.json.statusCode === 401) {
+    console.log("EXPIRED");
+    return {
+      ...state,
+      authCheck: "checking",
+      //auth: null,
+      //user: null
+    };
+  }
+
+
   if (action && action.type) {
     let _type = action.type;
     let _ACTION = _type.substring(0, _type.lastIndexOf('_'));
@@ -52,6 +64,7 @@ const reducer = (state: IState = InitialState, action: IResponseAction) => {
           }
           break;
       }
+      console.log(`SETTING STATE KEY ${[ACTIONS[_ACTION].ACTION]}`)
       state = { ...state, ...{ [ACTIONS[_ACTION].ACTION]: action.json } };
     }
   }
@@ -73,8 +86,35 @@ const reducer = (state: IState = InitialState, action: IResponseAction) => {
         componentStates,
       };
 
-    //case ACTIONS.GET_ME.ACTION:
+    case ACTIONS.GET_ME.ACTION:
+
+      return {
+        ...state,
+        authCheck:"checking"
+
+      };
+    case ACTIONS.GET_REFRESH_TOKEN.SUCCESS:
+        console.log("REFRESH TOKEN SUCCESS", action);
+        return {
+          ...state,
+          authCheck:"success",
+        };
+
+    case ACTIONS.GET_ME.SUCCESS:
+        return {
+          ...state,
+          authCheck:"success",
+        };
+    case ACTIONS.GET_ME.FAILURE:
+          return {
+            ...state,
+            authCheck:"expired",
+            token: null,
+            user: null
+          };
+
     case ACTIONS.USER_LOGIN.ACTION:
+
       return {
         ...state,
         loading: true,
@@ -87,9 +127,12 @@ const reducer = (state: IState = InitialState, action: IResponseAction) => {
           ...state,
           user: action.json.user,
           token: action.json.payload.token,
+          auth: action.json,
           loading: false,
           action,
+          authCheck:"success",
         };
+
     case ACTIONS.USER_LOGIN.FAILURE:
     case ACTIONS.USER_LOGOUT.ACTION:
       console.log("LOGOUT");
@@ -101,7 +144,11 @@ const reducer = (state: IState = InitialState, action: IResponseAction) => {
         loading: false,
         action,
       };
-
+      case ACTIONS.NAVIGATION.ACTION:
+        return {
+          ...state,
+          currentNav: action.payload
+        };
     case ACTIONS.DEFAULT.ACTION:
       return {
         ...state,

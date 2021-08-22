@@ -30,7 +30,6 @@ const appPersistConfig: PersistConfig<
   key: 'app',
 };
 
-
 const themePersistConfig: PersistConfig<ThemeState, unknown, unknown, unknown> =
   {
     storage: AsyncStorage,
@@ -44,8 +43,7 @@ export const reducers = {
 
 export const rootReducer = combineReducers(reducers);
 
-export type RootState = ReturnType<typeof rootReducer>;
-
+export type DefaultRootState = ReturnType<typeof rootReducer>;
 
 const systemMiddleware =
   (_store: MiddlewareAPI) => (next: Dispatch) => (action: RootAction) => {
