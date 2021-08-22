@@ -1,3 +1,14 @@
+#AgileSoft react Native Test
+
+![Alt text](/../master/Screenshots/AgileSoft_ReactNative_Test_1.png?raw=true)
+![Alt text](/../master/Screenshots/AgileSoft_ReactNative_Test_2.png?raw=true)
+![Alt text](/../master/Screenshots/AgileSoft_ReactNative_Test_3.png?raw=true)
+![Alt text](/../master/Screenshots/AgileSoft_ReactNative_Test_4.png?raw=true)
+![Alt text](/../master/Screenshots/AgileSoft_ReactNative_Test_5.png?raw=true)
+![Alt text](/../master/Screenshots/AgileSoft_ReactNative_Test_6.png?raw=true)
+![Alt text](/../master/Screenshots/AgileSoft_ReactNative_Test_7.png?raw=true)
+![Alt text](/../master/Screenshots/AgileSoft_ReactNative_Test_8.png?raw=true)
+
 # AgileSoft ReactNative - Base
 
 ## Configuración de Ambiente
