@@ -24,7 +24,7 @@ import thunkHttpRequest from './thunkHttpRequest';
    return async (dispatch) => {
      //console.log("THUNK REQUEST",_obj);
      const response = await thunkHttpRequest(_obj);
-     console.log(response);
+     //console.log(response);
      dispatch(response);
    };
 

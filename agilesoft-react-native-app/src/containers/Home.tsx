@@ -1,6 +1,6 @@
-import React, {memo, useEffect} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ActivityIndicator, Button, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, Button, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useTheme} from '../Theme';
 import {fetchUserAsync} from '../actions/usersActions';
@@ -8,10 +8,12 @@ import changeThemeAction from '../actions/themeActions';
 import Colors from '../constants/colors';
 import useSelector from '../utils/useSelector';
 import { ThemeState } from 'src/reducers/themeReducer';
-import { IAgileSoftMovieResults, IAgileSoftUser, IRequestAction, IResponseAction } from 'src/utils/interfaces';
+import { IAgileSoftMovie, IAgileSoftMovieResults, IAgileSoftUser, IRequestAction, IResponseAction } from 'src/utils/interfaces';
 import ACTIONS from '../utils/actions';
 import { apiRequest } from '../utils/standardActions';
-import { ignoreDispatchedActions } from '../utils/utils';
+//import { ignoreDispatchedActions } from '../utils/utils';
+import CustomCarousel from '../components/CustomCarousel/CustomCarousel';
+
 
 function Home() {
   const { Common, Fonts, Gutters, Layout } = useTheme()
@@ -24,13 +26,23 @@ function Home() {
   const action:IResponseAction = useSelector<IResponseAction>(state => state.app.action );
   const navigation:any = useSelector(state => state.app.currentNav );
 
-  const NOW_PLAYING:IAgileSoftMovieResults = useSelector<IAgileSoftUser>(state => state.app.GET_NOW_PLAYING );
-  const POPULAR:IAgileSoftMovieResults = useSelector<IAgileSoftUser>(state => state.app.GET_POPULAR );
+  const NOW_PLAYING:IAgileSoftMovieResults = useSelector<IAgileSoftMovieResults>(state => state.app.GET_NOW_PLAYING );
+  const POPULAR:IAgileSoftMovieResults = useSelector<IAgileSoftMovieResults>(state => state.app.GET_POPULAR );
 
-  useEffect(() => {
-    console.log("HOME UPDATED");
-  },[])
+  const NOW_PLAYING_ACC:IAgileSoftMovie[] = useSelector<IAgileSoftMovie[]>(state => {
+    if(!state.app.NOW_PLAYING_ACC) return []
+    return state.app.NOW_PLAYING_ACC
+  });
+  const POPULAR_ACC:IAgileSoftMovie[] = useSelector<IAgileSoftMovie[]>(state => {
+    if(!state.app.POPULAR_ACC) return []
+    return state.app.POPULAR_ACC
+  } );
 
+  const [nowPlayingRetrievedPages,setNowPlayingRetrievedPages] = useState<number[]>([]);
+  const [popularRetrievedPages,setPopularRetrievedPages] = useState<number[]>([]);
+
+  const [nowPlayingCurrentPage,setNowPlayingCurrentPage] = useState<number>(1);
+  const [popularPage,setPopularPage] = useState<number>(1);
  // dispatch(apiRequest(ACTIONS.GET_ME, {}));
 
   useEffect(() => {
@@ -38,11 +50,37 @@ function Home() {
     let idx = navigation.state.index;
     //console.log(navigation.state.index);
     if(idx===0) {
-     dispatch(apiRequest(ACTIONS.GET_NOW_PLAYING, {}));
-     dispatch(apiRequest(ACTIONS.GET_POPULAR, {}));
+      updateNowPlaying();
+      updatePopular();
     }
      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
+
+  const updateNowPlaying = () => {
+    if(nowPlayingRetrievedPages.includes(nowPlayingCurrentPage)) return;
+    console.log(`trayendo now playing pagina ${nowPlayingCurrentPage}`);
+    setNowPlayingRetrievedPages([...nowPlayingRetrievedPages,nowPlayingCurrentPage])
+    dispatch(apiRequest(ACTIONS.GET_NOW_PLAYING,{query:{page:nowPlayingCurrentPage}}))
+  }
+
+  const updatePopular = () => {
+    if(popularRetrievedPages.includes(popularPage)) return;
+      setNowPlayingRetrievedPages([...popularRetrievedPages,popularPage])
+      dispatch(apiRequest(ACTIONS.GET_POPULAR,{query:{page:popularPage}}))
+  }
+
+  const updateEventNowPlaying = (nextPage:number) => {
+    console.log(`Bring page ${nextPage}`)
+    setNowPlayingCurrentPage(nextPage);
+  }
+
+  const updateEventPopular = (nextPage:number) => {
+    console.log(`Bring page ${nextPage}`)
+    setPopularPage(nextPage);
+  }
+
+  useEffect(() => { if(popularPage !== 1) { updatePopular() } },[popularPage])
+  useEffect(() => { if(nowPlayingCurrentPage !== 1) { updateNowPlaying() } },[nowPlayingCurrentPage])
 
   const changeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
     console.log(theme,darkMode);
@@ -50,13 +88,12 @@ function Home() {
   }
 
   return (
-    <View style={[Layout.fill, Layout.colCenter]}>
+    <ScrollView>
+
+      {/*style={[Layout.fill, Layout.colCenter]}*/}
 
 
-      {  NOW_PLAYING && NOW_PLAYING.data && NOW_PLAYING.data.map(item => {
-                return <Text>{item.original_title}</Text>
-          })
-      }
+      {  NOW_PLAYING && NOW_PLAYING.data && <CustomCarousel mode={"stretch"} updateResults={updateEventNowPlaying} imageBaseUrl={NOW_PLAYING.imageBaseUrl} data={NOW_PLAYING_ACC}/> }
 
       {  POPULAR && POPULAR.data && POPULAR.data.map(item => {
                 return <Text>{item.original_title}</Text>
@@ -93,7 +130,7 @@ function Home() {
         <Text style={Fonts.textRegular}>Light</Text>
       </TouchableOpacity>
       */}
-    </View>
+    </ScrollView>
   );
 }
 

@@ -62,18 +62,22 @@ const App = () => {
   //const stateApp:IState = useSelector<IState>(state => state.app );
 
   React.useEffect(() => {
-    console.log('APP LOADED');
+    //console.log('APP LOADED');
     dispatch(apiRequest(ACTIONS.GET_ME, {}));
     //dispatch(apiRequest(ACTIONS.GET_ME, {}));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
-    if(authcheck === "expired"  && auth) {
-      console.log("REQUIREING REFRESH TOKEN");
+    if(authcheck === "expired" ) {
+      //console.log("REQUIREING REFRESH TOKEN");
       dispatch(apiRequest(ACTIONS.GET_REFRESH_TOKEN, {body: { refresh_token:auth.payload.refreshToken}}));
     }
   }, [authcheck]);
+  //TODO borrar
+  React.useEffect(() => {
+    console.log(auth);
+  }, [auth]);
 
   const { t } = useTranslation();
 
@@ -120,11 +124,11 @@ const App = () => {
   const tabNavChange = ({ navigation }) => ({
     state: e => {
       // Do something with the state
-      console.log('state changed', e.data);
+      //console.log('state changed', e.data);
       dispatch(actionDispatch(ACTIONS.NAVIGATION, e.data));
       // Do something with the `navigation` object
       if (!navigation.canGoBack()) {
-        console.log("we're on the initial screen");
+        //console.log("we're on the initial screen");
       }
     },
   });

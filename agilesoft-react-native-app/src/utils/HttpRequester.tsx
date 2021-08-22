@@ -38,7 +38,7 @@ class HttpRequester implements HttpMethodsInterface {
   ): Promise<AxiosResponse> => {
     if (auth) {
       const tokenHeader = await appendAuthToken();
-      console.log("TOKEN HEADER",tokenHeader)
+      //console.log("TOKEN HEADER",tokenHeader)
       if (config && config.headers) {
         config.headers = { ...config.headers, ...tokenHeader };
       } else {
@@ -53,7 +53,7 @@ class HttpRequester implements HttpMethodsInterface {
     ) {
       config.headers = { ...config.headers, ...this.config.headers };
     }
-    console.log(`POST ${(url ? url : this.url) + path}`,requestBody,config);
+    //console.log(`POST ${(url ? url : this.url) + path}`,requestBody,config);
     return await axios.post((url ? url : this.url) + path, requestBody, config);
   };
 
@@ -95,7 +95,7 @@ class HttpRequester implements HttpMethodsInterface {
       }
     }
     config.headers = { ...config.headers, ...this.config.headers };
-    console.log(`GET ${(url ? url : this.url) + path}`,config);
+    console.log(`GET ${(url ? url : this.url) + path}`);
     return await axios.get((url ? url : this.url) + path, config);
   };
 

@@ -13,63 +13,77 @@ import PARSERS from './parsers';
 
 const reducer = (state: IState = InitialState, action: IResponseAction) => {
 
-
   if(action.json && action.json.error && action.json.statusCode === 401) {
-    console.log("EXPIRED");
+    //console.log("EXPIRED");
     return {
       ...state,
-      authCheck: "checking",
+      authCheck: "expired",
       //auth: null,
       //user: null
     };
   }
+
+  //Acumuladores
 
 
   if (action && action.type) {
     let _type = action.type;
     let _ACTION = _type.substring(0, _type.lastIndexOf('_'));
     if (ACTIONS[_ACTION]) {
-      console.log(
-        `Lookign for parser for ${_ACTION} If action is Success or Failed`
-      );
+      //console.log( `Lookign for parser for ${_ACTION} If action is Success or Failed`);
       switch (action.type) {
         case ACTIONS[_ACTION].FAILURE:
           if (ACTIONS[_ACTION].ERROR_PARSER) {
-            console.log(
-              `PARSER FOUND FOR ACTION:  ${_ACTION} on ${action.type}`
-            );
+            //console.log(`PARSER FOUND FOR ACTION:  ${_ACTION} on ${action.type}`);
             if (action.json) {
               action.json = ACTIONS[_ACTION].ERROR_PARSER(action.json);
             }
           } else {
-            console.log(
-              `NO PARSER FOUND FOR ACTION:  ${_ACTION} on ${action.type}`
-            );
+            //console.log( `NO PARSER FOUND FOR ACTION:  ${_ACTION} on ${action.type}` );
             action.json = PARSERS.DEFAULT_ERROR_PARSING;
           }
           break;
         case ACTIONS[_ACTION].SUCCESS:
-          console.log(`Success Action for ${_ACTION}`);
+          //console.log(`Success Action for ${_ACTION}`);
           if (ACTIONS[_ACTION].PARSER) {
-            console.log(
-              `PARSER FOUND FOR ACTION: ${_ACTION} on ${action.type}`
-            );
+            //console.log( `PARSER FOUND FOR ACTION: ${_ACTION} on ${action.type}` );
             if (action.json) {
               action.json = ACTIONS[_ACTION].PARSER(action.json);
             }
           } else {
-            console.log(
-              `NO PARSER FOUND FOR ACTION:  ${_ACTION} on ${action.type}`
-            );
+            //console.log( `NO PARSER FOUND FOR ACTION:  ${_ACTION} on ${action.type}`  );
           }
           break;
       }
-      console.log(`SETTING STATE KEY ${[ACTIONS[_ACTION].ACTION]}`)
+      //console.log(`SETTING STATE KEY ${[ACTIONS[_ACTION].ACTION]}`)
       state = { ...state, ...{ [ACTIONS[_ACTION].ACTION]: action.json } };
     }
   }
 
+
+
   switch (action.type) {
+
+    case ACTIONS.GET_NOW_PLAYING.SUCCESS:
+     // state["NOW_PLAYING_ACC"] && console.log(`ACUMULADOR NOW PLAYING Anteirores:${state["NOW_PLAYING_ACC"].length}, nuevos: ${action.json.data.length}`)
+
+     // if(state["NOW_PLAYING_ACC"] && state["NOW_PLAYING_ACC"].length !== 20) {
+
+        return {
+        ...state,
+        NOW_PLAYING_ACC: PARSERS.ACUMULADOR_NOW_PLAYING(state["NOW_PLAYING_ACC"],action.json.data)
+      }
+   // }
+
+    case ACTIONS.GET_POPULAR.SUCCESS:
+   //   if(state["POPULAR_ACC"] && state["POPULAR_ACC"].length === 20) {
+        return {
+          ...state,
+          POPULAR_ACC: PARSERS.ACUMULADOR_POPULARES(state["POPULAR_ACC"],action.json.data)
+        }
+   //   }
+
+
     case 'SET_COMPONENT_STATE':
       return {
         ...state,
@@ -99,6 +113,13 @@ const reducer = (state: IState = InitialState, action: IResponseAction) => {
           ...state,
           authCheck:"success",
         };
+    case ACTIONS.GET_REFRESH_TOKEN.FAILURE:
+      return {
+        ...state,
+        authCheck:"expired",
+        user:null,
+        token: null
+      };
 
     case ACTIONS.GET_ME.SUCCESS:
         return {
