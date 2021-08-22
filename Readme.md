@@ -1,6 +1,5 @@
 #AgileSoft react Native Test
 
-![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_1.png)
 ![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_2.png)
 ![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_3.png)
 ![Screenshot](/../master/Screenshots/AgileSoft_ReactNative_Test_4.png)
