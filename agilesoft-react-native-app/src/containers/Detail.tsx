@@ -2,11 +2,12 @@ import React, {FC, memo, useEffect} from 'react';
 import { Image, ScrollView, Text, View} from 'react-native';
 import { useDispatch } from 'react-redux';
 import ACTIONS from '../utils/actions';
-import { IAgileSoftMovie, IResponseAction } from '../utils/interfaces';
+import { IAgileSoftActors, IAgileSoftMovie, IResponseAction } from '../utils/interfaces';
 import { apiRequest } from '../utils/standardActions';
 import useStateSelector from '../utils/useStateSelector';
 import {useTheme} from '../Theme';
 import { useTranslation } from 'react-i18next';
+import CustomActors from '../components/CustomPosters/CustomActors';
 
 function Detail({ navigation, route }) {
   const { movie,imageBasePath }:{movie:IAgileSoftMovie,imageBasePath:string} = route.params;
@@ -31,6 +32,9 @@ function Detail({ navigation, route }) {
       dispatch(apiRequest(ACTIONS.GET_DETAIL,{params:{id:movie.id}}))
     }
   }
+
+  const DETAIL:IAgileSoftActors = useStateSelector<IAgileSoftActors>(state => state.app.GET_DETAIL );
+
 
   return (
     <ScrollView>
@@ -57,6 +61,11 @@ function Detail({ navigation, route }) {
 
 
         </View>
+        <ScrollView>
+
+        {  DETAIL && DETAIL.data && <CustomActors mode={"cover"}  imageBaseUrl={DETAIL.imageBaseUrl} data={DETAIL.data}/> }
+
+        </ScrollView>
         </>
         )
 
