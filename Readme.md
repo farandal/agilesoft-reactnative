@@ -268,12 +268,11 @@ const Componente:FC<{}> = ({}) => {
 ...
 
   cosnt dispatch = useDispatch()
-
+  
   //metodo a discresión para la carga del componente
   React.useEffect(() => {
       dispatch(apiRequest(ACTIONS.GET_DETAIL,{params:{id:movie.id}}))
   }, []);
-  dispatch(apiRequest(ACTIONS.GET_DETAIL,{params:{id:movie.id}}))
   const DETAIL:IAgileSoftActors = useStateSelector<IAgileSoftActors>(state => state.app.GET_DETAIL );
 
   return (
