@@ -287,4 +287,27 @@ const Componente:FC<{}> = ({}) => {
 - En caso de la accion defina el request como  AUTH:true, esta aplicacion guarda el token en una llave token en el AsyncStorage del dispositivo, y el httpRequester busca el token y lo inyecta en el axios request, con el helper utils/appendAuthToken.tsx
 
 
+### ACUMULADORES
+
+Para la carga infinita en los componentes del home, se implementa una simple estrategia de acumuladores por el lado de redux,
+
+En el reductor entonces, se agregan dos reductores adicionales para las respuestas de peliculas y populares, entonces, 
+El parser configurado, devuelve el objeto acumulado al estado con la nueva respuesta desde la API, y lo guarda en una llave en el estado, 
+La que es finalmente obtneida con el useSelector en el componente.
+
+```
+ case ACTIONS.GET_NOW_PLAYING.SUCCESS:
+      return {
+        ...state,
+        NOW_PLAYING_ACC: PARSERS.ACUMULADOR_NOW_PLAYING(state["NOW_PLAYING_ACC"],action.json.data)
+      }
+
+    case ACTIONS.GET_POPULAR.SUCCESS:
+
+        return {
+          ...state,
+          POPULAR_ACC: PARSERS.ACUMULADOR_POPULARES(state["POPULAR_ACC"],action.json.data)
+        }
+```
+
 
