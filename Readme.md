@@ -198,3 +198,93 @@ Estas son las dependencias que utilizare para este proyecto, contiene lo escenci
 ### Helpers
 
     "react-i18next": "^11.11.0"
+
+
+## Arquitectura Redux 
+He implementado un patrón de diseño propio utilizando Redux.
+
+### Acciones
+Las acciones de definen en un objeto de configuración que implementa la interfaz IActions que extiende IRequestAction.
+Aquí al igual que un archivo de rutas, se configuran todas las acciones de la aplicación: 
+
+```
+export interface IRequestAction {
+  ACTION?: string,
+  SUCCESS?: string,
+  FAILURE?: string,
+  PATH?: string,
+  METHOD?: "POST" | "GET" | "PATCH" | "PUT" | "UPDATE" | "DELETE",
+  AUTH?: boolean,
+  PARSER?: (json:Object) => Object
+  ERROR_PARSER?: (json:Object) => Object
+}
+
+```
+
+```
+import { IActions} from "./interfaces";
+import PARSERS from "./parsers";
+
+const ACTIONS:IActions = {
+  GET_NOW_PLAYING : {
+    ACTION: 'GET_NOW_PLAYING',
+    SUCCESS: 'GET_NOW_PLAYING_SUCCESS',
+    FAILURE: 'GET_NOW_PLAYING_FAILURE',
+    PATH: "/movies/now_playing",
+    METHOD: "GET",
+    AUTH: true,
+    PARSER: PARSERS.GET_NOW_PLAYING
+  },
+  ...
+  
+```
+
+### Dispatchers | Lanzadores.
+
+En el archivo utils/standardActions.tsx se definen los dos lanzadores principales utilizados por esta App.
+
+- apiRequest:
+  Api Request, interviene la acción y gatilla el proceso del request a la APi a traves de un wrapper de axios implementado en utils/thunkHttpRequest.tsx
+- actionDispatch:
+  Action Dispatch, solo emite una acción, la cual debe ser capturada por el reductor principal.
+
+## Reductor Principal
+
+- El reductor principal está dividido en tres bloques:
+- El primer bloque captura la respuesta 401 del servidor, en caso de acceso desautorizado. 
+- El segundo bloque revisa si hay un parser configurado para la acción devuelta en el archivo de configuración de acciones. 
+- También guarda automáticamente una llave del estado, acorde al nombre de la acción, los resultados puros de está para su posterior uso.
+- Por último define los reductores manuales para las acciones
+
+### Implementación de apiRequest en un componente.
+
+- Para hacer un request a la API>
+- Se hace un apiRequest dispatch
+- indicando la accion definida en el archivo de acciones
+- se le pasa el objeto de configuracion del httpRequester
+
+```
+const Componente:FC<{}> = ({}) => {
+...
+
+  cosnt dispatch = useDispatch()
+  dispatch(apiRequest(ACTIONS.GET_DETAIL,{params:{id:movie.id}}))
+  const DETAIL:IAgileSoftActors = useStateSelector<IAgileSoftActors>(state => state.app.GET_DETAIL );
+
+  return (
+  ...
+  )
+
+}
+
+```
+
+- El httpRequester, recibe los parametros
+- @body - objeto enviado en el body
+- @query - objeto que sera inyectado como querystring en el request. 
+- @params - parametros que son reemplazados en la definicion del PATH en la url. e.g: "/movies/now_playing/:id",
+- @headers - Customn headers
+- En caso de la accion defina el request como  AUTH:true, esta aplicacion guarda el token en una llave token en el AsyncStorage del dispositivo, y el httpRequester busca el token y lo inyecta en el axios request, con el helper utils/appendAuthToken.tsx
+
+
+
