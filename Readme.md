@@ -94,13 +94,13 @@ Agregué los siguientes comandos en el package.json, y varios más que se pueden
 
 ### comandos
 
-lint - busca defectos en el código, en base a las reglas que se especifiquen en tslint.json
-tsc - corre el transpilador de typescript con las reglas definidas en tsconfig.json
-clean - limpia la carpeta build
-build - transpila el codigo en la carpeta build
-watch - ejecuta el build en cuanto se detectan cambios en la fuente
-watchAndStart - corre watch en forma concurrente usando concurrently y ejecuta el comando start en package.json
-buildAndStart - ejecuta el comando build y luego watchAndStart
+- lint - busca defectos en el código, en base a las reglas que se especifiquen en tslint.json
+- tsc - corre el transpilador de typescript con las reglas definidas en tsconfig.json
+- clean - limpia la carpeta build
+- build - transpila el codigo en la carpeta build
+- watch - ejecuta el build en cuanto se detectan cambios en la fuente
+- watchAndStart - corre watch en forma concurrente usando concurrently y ejecuta el comando start en package.json
+- buildAndStart - ejecuta el comando build y luego watchAndStart
 
 
 ## Correr el ‘boilerplate’ de la aplicación en el emulador 
